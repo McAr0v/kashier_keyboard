@@ -26,16 +26,31 @@ class Keyboard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                getButton(number: 1),
-                getButton(number: 2),
-                getButton(number: 3),
-                getButton(number: 4),
-                getButton(number: 5),
-                getButton(number: 6),
-                getButton(number: 7),
-                getButton(number: 8),
-                getButton(number: 9),
-                getButton(number: 0),
+                getButton(number: '1'),
+                getButton(number: '2'),
+                getButton(number: '3'),
+                getButton(number: '4'),
+                getButton(number: '5'),
+                getButton(number: '6'),
+                getButton(number: '7'),
+                getButton(number: '8'),
+                getButton(number: '9'),
+                getButton(number: '0'),
+
+                getButton(
+                  number: '⌫',
+                  method: () {
+                    pressKey(digitsVK['backspace']!);
+                  },
+                ),
+
+                getButton(
+                  number: '↵',
+                  method: () {
+                    pressKey(digitsVK['enter']!);
+                  },
+                ),
+
               ],
             ),
           ),
@@ -69,10 +84,13 @@ class Keyboard extends StatelessWidget {
     '7': 0x37,
     '8': 0x38,
     '9': 0x39,
+
+    'backspace': 0x08,
+    'enter': 0x0D,
   };
 
 
-  Widget getButton({required int number}){
+  Widget getButton({required String number, VoidCallback? method}){
 
     return Card(
       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -81,12 +99,11 @@ class Keyboard extends StatelessWidget {
       ),
       clipBehavior: Clip.antiAlias, // 👈 важно!
       child: InkWell(
-        onTap: () {
-          print(number.toString());
-          pressKey(digitsVK[number.toString()]!);
+        onTap: method ?? (){
+          inputNumbers(number: int.tryParse(number) ?? 0);
         },
         child: SizedBox(
-          width: 50,
+          width: 35,
           height: 50,
           child: Center(
             child: Text(
@@ -97,5 +114,10 @@ class Keyboard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void inputNumbers ({required int number}) {
+    print(number.toString());
+    pressKey(digitsVK[number.toString()]!);
   }
 }
