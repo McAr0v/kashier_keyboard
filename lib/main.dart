@@ -9,7 +9,7 @@ void main() async{
   await windowManager.ensureInitialized();
 
   WindowOptions windowOptions = WindowOptions(
-    size: Size(720, 150),
+    size: Size(720, 100),
     center: true,
     backgroundColor: Colors.transparent,
     skipTaskbar: false,
@@ -21,7 +21,7 @@ void main() async{
     await windowManager.show();
     await windowManager.focus();
     // 👇 ВАЖНО: минимальный размер
-    await windowManager.setMinimumSize(const Size(720, 150));
+    await windowManager.setMinimumSize(const Size(720, 100));
     // 🔥 ВОТ РЕАЛЬНЫЙ ФИКС
     final hwnd = GetForegroundWindow();
 

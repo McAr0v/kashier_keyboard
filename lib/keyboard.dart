@@ -10,13 +10,13 @@ class Keyboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           DragToMoveArea(
             child: Container(
-              height: 50,
-              color: Colors.grey,
+              height: 30,
+              color: Color(0xFFF2F2F2),
               child: Center(child: Text('Ввод табельного')),
             ),
           ),
@@ -46,6 +46,7 @@ class Keyboard extends StatelessWidget {
 
                 getButton(
                   number: '↵',
+                  flex: 2,
                   method: () {
                     pressKey(digitsVK['enter']!);
                   },
@@ -90,25 +91,33 @@ class Keyboard extends StatelessWidget {
   };
 
 
-  Widget getButton({required String number, VoidCallback? method}){
+  Widget getButton({required String number, VoidCallback? method, int flex = 1}){
 
-    return Card(
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      clipBehavior: Clip.antiAlias, // 👈 важно!
-      child: InkWell(
-        onTap: method ?? (){
-          inputNumbers(number: int.tryParse(number) ?? 0);
-        },
-        child: SizedBox(
-          width: 35,
-          height: 50,
-          child: Center(
-            child: Text(
-              number.toString(),
-              style: TextStyle(fontSize: 20),
+    return Expanded(
+      flex: flex,
+      child: Card(
+        color: Colors.white,
+        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+          side: BorderSide(
+            color: Color(0xFFF2F2F2), // 👈 цвет обводки
+            width: 1,              // 👈 толщина (сделай 0.5 для тонкой)
+          ),
+        ),
+        clipBehavior: Clip.antiAlias, // 👈 важно!
+        child: InkWell(
+          onTap: method ?? (){
+            inputNumbers(number: int.tryParse(number) ?? 0);
+          },
+          child: SizedBox(
+            width: double.infinity,
+            height: 50,
+            child: Center(
+              child: Text(
+                number.toString(),
+                style: TextStyle(fontSize: 20),
+              ),
             ),
           ),
         ),
